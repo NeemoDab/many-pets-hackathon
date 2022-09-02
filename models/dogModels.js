@@ -1,6 +1,5 @@
 // import { query } from "../db/index.js";
-
-import { pool } from "../db/index.js";
+// import { pool } from "../db/index.js";
 
 export async function checkValidBreed(searchQuery) {
 	//Need to add in logic for validation for dog breed
