@@ -34,6 +34,7 @@ export async function deleteCount(id) {
 }
 // Retrieves all information within the database table.
 export async function getAllCount() {
+	console.log(process.env.PGUSER);
 	const result = await pool.query('SELECT * FROM count');
 	return result.rows;
 }
