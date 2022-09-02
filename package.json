@@ -1,30 +1,31 @@
 {
-  "name": "many-pets-hackathon",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
-    "dev": "nodemon app.js",
-    "db:createReviewTable": "node -r dotenv/config ./db/scripts/createReviewTable.js",
-    "db:populateReviewTable": "node -r dotenv/config ./db/scripts/populateReviewTable.js",
-    "db:dropTable": "node -r dotenv/config ./db/scripts/dropTable.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/NeemoDab/many-pets-hackathon.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/NeemoDab/many-pets-hackathon/issues"
-  },
-  "homepage": "https://github.com/NeemoDab/many-pets-hackathon#readme",
-  "dependencies": {
-    "express": "^4.18.1",
-    "nodemon": "^2.0.19",
-    "pg": "^8.8.0"
-  }
+	"name": "many-pets-hackathon",
+	"version": "1.0.0",
+	"description": "",
+	"main": "app.js",
+	"type": "module",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node app.js",
+		"dev": "nodemon app.js",
+		"db:createReviewTable": "node -r dotenv/config ./db/scripts/createReviewTable.js",
+		"db:populateReviewTable": "node -r dotenv/config ./db/scripts/populateReviewTable.js",
+		"db:dropTable": "node -r dotenv/config ./db/scripts/dropTable.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/NeemoDab/many-pets-hackathon.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/NeemoDab/many-pets-hackathon/issues"
+	},
+	"homepage": "https://github.com/NeemoDab/many-pets-hackathon#readme",
+	"dependencies": {
+		"express": "^4.18.1",
+		"nodemon": "^2.0.19",
+		"pg": "^8.8.0"
+	}
 }
