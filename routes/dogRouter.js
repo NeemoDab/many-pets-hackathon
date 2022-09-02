@@ -3,10 +3,10 @@ const router = express.Router();
 
 //prettier-ignore
 import {
-	checkValidBreed, checkValidAddress, checkBreedDiscount, } from "../models/dogModels.js";
+	checkValidBreed, checkValidAddress, checkBreedDiscount, checkAddressUpcount} from "../models/dogModels.js";
 
 router.get("/", async function (req, res) {
-	// /dogquote?q=price&breed=dog&age=8&address=38%20Croft%20Rd%SW19%202NF&multi=1
+	// /localhost:3001/dogquote?q=price&breed=dog&age=8&address=london&multi=1
 	console.log(req.query.q);
 	console.log(req.query.breed);
 	console.log(req.query.age);
@@ -41,16 +41,24 @@ router.get("/", async function (req, res) {
 			});
 		}
 
+		//Dog breed discount
+		let basePrice = 120;
 		let breedDiscount = 0;
 		const isBreedDiscounted = await checkBreedDiscount(req.query.breed);
 		isBreedDiscounted ? (breedDiscount = -0.1) : (breedDiscount = 0);
 
-		const insuranceQuotePrice = basePrice + basePrice * breedDiscount;
+		//Address upcount
+		let addressUpcount = 0;
+		const isAddressUpcounted = await checkAddressUpcount(req.query.address);
+		isAddressUpcounted ? (addressUpcount = 0.15) : (addressUpcount = 0);
+
+		//Quote calculation
+		const insuranceQuotePrice = basePrice + (basePrice * breedDiscount) + (basePrice * addressUpcount);
 
 		const payload = {
 			success: true,
-			message: `Quote for dog breed: ${req.query.breed}`,
-			data: "your price here!",
+			message: `Quote for dog breed: ${req.query.breed} in ${req.query.address}`,
+			data: {insuranceQuotePrice},
 		};
 		return res.json(payload);
 	}

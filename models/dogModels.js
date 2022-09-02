@@ -13,15 +13,26 @@ export async function checkValidAddress(searchQuery) {
 }
 
 export async function checkBreedDiscount(dog) {
-	dogBreedsWithDiscount = ["poodle", "labrador", "labradoodle"];
+	const dogBreedsWithDiscount = ["poodle", "labrador", "labradoodle"];
 
 	if (
 		dogBreedsWithDiscount.includes(dog.toLowerCase())
-		// === "poodle" || dog.toLowerCase() === "labrador" || dog.toLowerCase() === "labradoodle"
 	) {
 		return true;
 	}
 	return false;
+}
+
+export async function checkAddressUpcount(address){
+	//Temporary address logic (awaiting address validation logic)
+	const addressWithUpcount = ["birmingham", "london", "leeds"];
+	if (
+		addressWithUpcount.includes(address.toLowerCase())
+	) {
+		return true;
+	}
+	return false;
+
 }
 
 // export async function getReviews(searchQuery) {
