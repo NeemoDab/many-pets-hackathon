@@ -6,10 +6,10 @@ export const pool= new pg.Pool({
     DATABASE:process.env.PGDATABASE,
     PASSWORD:process.env.PGPASSWORD,
     HOST:process.env.PGHOST,
-    PORT:process.env.PGPORT,
+    PORT:process.env.PORT,
     ssl:{ rejectUnauthorized: false}
 });
 // process.env.PGPORT
-export function query(text,params,callback){
-    return pool.query(text,params,callback);
+export function query(INT,params,callback){
+    return pool.query(INT,params,callback);
 };
