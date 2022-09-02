@@ -5,8 +5,51 @@ const router = express.Router();
 import {
 	checkValidBreed, checkValidAddress, checkBreedDiscount, checkAddressUpcount, calculateAgeMultiplier} from "../models/dogModels.js";
 
+
 router.get("/", async function (req, res) {
+
 	// /localhost:3001/dogquote?q=price&breed=dog&age=8&address=london&multi=1
+  
+  //   const request = require("request");
+//   let name = "golden retriever";
+//   request.get(
+//     {
+//       url: "https://api.api-ninjas.com/v1/dogs?name=" + name,
+//       headers: {
+//         "X-Api-Key": process.env.DOGAPIKEY,
+//       },
+//     },
+//     function (error, response, body) {
+//       if (error) return console.error("Request failed:", error);
+//       else if (response.statusCode != 200)
+//         return console.error(
+//           "Error:",
+//           response.statusCode,
+//           body.toString("utf8")
+//         );
+//       else console.log(body);
+//     }
+//   );
+//   let address = "";
+//   request.get(
+//     {
+//       url: 'api.ideal-postcodes.co.uk/v1/autocomplete/addresses?=iddqd&q=parkside',
+//       headers: {
+//         "X-Api-Key": process.env.ADDRESSAPIKEY,
+//       },
+//     },
+//     function (error, response, body) {
+//       if (error) return console.error("Request failed:", error);
+//       else if (response.statusCode != 200)
+//         return console.error(
+//           "Error:",
+//           response.statusCode,
+//           body.toString("utf8")
+//         );
+//       else console.log(body);
+//     }
+//   );
+  
 	console.log(req.query.q);
 	console.log(req.query.breed);
 	console.log(req.query.age);
@@ -82,6 +125,7 @@ router.get("/", async function (req, res) {
 		success: false,
 		message: "One or more required parameters are missing",
 	});
+
 });
 
 // router.get("/", async function (req, res) {
