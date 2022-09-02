@@ -9,7 +9,7 @@ use our query function to communicate with the database (hand in the SQL string)
 
 //active cors to help work matching front end
 
-import { query } from "../index";
+import { query } from "../index.js";
 
 const sqlString = `CREATE TABLE IF NOT EXISTS count (count_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY, count INT);`;
 
