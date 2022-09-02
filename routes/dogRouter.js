@@ -2,23 +2,44 @@
 import express from "express";
 const router = express.Router();
 
+import {checkValidBreed, checkValidAddress} from "../models/dogModels.js"
+
 router.get("/", async function (req, res) {
-	// /dogquote?q=price&breed=dog&age=8&location=38%20Croft%20Rd%SW19%202NF&multi=1
+	// /dogquote?q=price&breed=dog&age=8&address=38%20Croft%20Rd%SW19%202NF&multi=1
 	console.log(req.query.q);
 	console.log(req.query.breed);
 	console.log(req.query.age);
-	console.log(req.query.location);
+	console.log(req.query.address);
 	console.log(req.query.multi);
 	if (
 		req.query.q !== undefined &&
 		req.query.breed !== undefined &&
 		req.query.age !== undefined &&
-		req.query.location !== undefined &&
+		req.query.address !== undefined &&
 		req.query.multi !== undefined
 	) {
-		// const result = await getHabitsByUserId(req.query.userId);
-		// const convertedData = convertHabitData(result);
+		//Checking the dog breed is valid
+		const isBreedValid = await checkValidBreed(req.query.breed)
+		console.log(isBreedValid)
 
+		if (!isBreedValid){	
+			return res.json({
+				success: false,
+				message: `This is not a valid dog breed`
+			})
+		}
+
+		//Checking the UK address is valid
+		const isAddressValid = await checkValidAddress(req.query.address)
+		console.log(isAddressValid)
+
+		if (!isAddressValid){	
+			return res.json({
+				success: false,
+				message: `This is not a valid UK address`
+			})
+		}
+	
 		const payload = {
 			success: true,
 			message: `Quote for dog breed: ${req.query.breed}`,
