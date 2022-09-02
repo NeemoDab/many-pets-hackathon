@@ -2,73 +2,63 @@
 import express from "express";
 const router = express.Router();
 
-import {
-  getReviews,
-  createNewReview,
-  deleteReview,
-  getAllReviews,
-} from "../models/reviewmodels.js";
-
 router.get("/", async function (req, res) {
-  const responseObject = { success: true, data: await getAllReviews() };
-  console.log("received")
-  res.json(responseObject);
+	// /pets?q=price&breed=dog&age=8&location=38%20Croft%20Rd%SW19%202NF&multi=1
+	console.log(req.query.q);
+	console.log(req.query.breed);
+	console.log(req.query.age);
+	console.log(req.query.location);
+	console.log(req.query.multi);
+	if (
+		req.query.q !== undefined &&
+		req.query.breed !== undefined &&
+		req.query.age !== undefined &&
+		req.query.location !== undefined &&
+		req.query.multi !== undefined
+	) {
+		// const result = await getHabitsByUserId(req.query.userId);
+		// const convertedData = convertHabitData(result);
+
+		const payload = {
+			success: true,
+			message: `Quote for dog breed: ${req.query.breed}`,
+			data: "your price here!",
+		};
+		return res.json(payload);
+	}
 });
 
-router.get("/", async function (req, res) {
-  console.log(`Test received`)
-  const searchQuery = req.query.title;
-  console.log(`searched query log: ${searchQuery}`);
-  // define the object it'll return
-  const responseObject = {
-    success: true,
-    data: await getReviews(searchQuery),
-  };
-  // confirm in the console what the client requested
-  console.log(`router get request worked`);
-  // return the response object (defined above) as JSON
-  res.json(responseObject);
-});
+// router.get("/", async function (req, res) {
+//   console.log(`Test received`)
+//   const searchQuery = req.query.title;
+//   console.log(`searched query log: ${searchQuery}`);
+//   // define the object it'll return
+//   const responseObject = {
+//     success: true,
+//     data: await getReviews(searchQuery),
+//   };
+//   // confirm in the console what the client requested
+//   console.log(`router get request worked`);
+//   // return the response object (defined above) as JSON
+//   res.json(responseObject);
+// });
 
-router.post("/", async function (req, res) {
-  const newReview = req.body;
-  console.log(`${newReview.title} new review`)
-  const result = createNewReview(newReview);
-  res.json({ success: true, data: await result });
-});
+// router.post("/", async function (req, res) {
+//   const newReview = req.body;
+//   console.log(`${newReview.title} new review`)
+//   const result = createNewReview(newReview);
+//   res.json({ success: true, data: await result });
+// });
 
-router.delete("/:id", async function (req, res) {
-  const id = Number(req.params.id);
-  const result = deleteReview(id);
-  res.json({ success: true, data: await result });
-});
+// router.delete("/:id", async function (req, res) {
+//   const id = Number(req.params.id);
+//   const result = deleteReview(id);
+//   res.json({ success: true, data: await result });
+// });
 
-export default router;
+// export default router;
 
 // NOTE: changed "payload" to "data" because of a frontend / react specific method
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // // GET REQUESTS AND HTTP requests
 // // Reviews
@@ -99,7 +89,6 @@ export default router;
 //   const result = await getReviews();
 //   res.json({ success: true, payload: result });
 // });
-
 
 // router.get("/:id", function (req, res) {
 //   const id = Number(req.params.id);
