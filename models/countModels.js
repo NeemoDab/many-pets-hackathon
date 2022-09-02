@@ -1,7 +1,6 @@
-
 // import { query } from "../db/index.js";
 
-import { pool } from '../db/index.js';
+import { pool } from "../db/index.js";
 
 export async function getCount(searchQuery) {
 	console.log(`IT'S HERE! (from models) ${searchQuery} !`);
@@ -17,9 +16,7 @@ export async function getCount(searchQuery) {
 export async function createNewCount(newCount) {
 	const result = await pool.query(
 		`INSERT INTO count (count) VALUES ($1) RETURNING *;`,
-		[
-			newCount.count,
-    ]
+		[newCount.count]
 	);
 
 	return result.rows;
@@ -27,15 +24,14 @@ export async function createNewCount(newCount) {
 // Functionality to delete snippet // Only viable via Postman using DELETE at this time
 export async function deleteCount(id) {
 	const result = await pool.query(
-		'DELETE FROM count WHERE id = ($1) RETURNING *;',
+		"DELETE FROM count WHERE id = ($1) RETURNING *;",
 		[id]
 	);
 	return result;
 }
 // Retrieves all information within the database table.
 export async function getAllCount() {
-	console.log(process.env.PGUSER);
-	const result = await pool.query('SELECT * FROM count');
+	const result = await pool.query("SELECT * FROM count");
 	return result.rows;
 }
 
@@ -45,8 +41,6 @@ export async function getAllCount() {
 //   console.log(res);
 //   return res.rows
 // }
-
-
 
 // export function searchReviewsByTitle(searchTerm) {
 //   return reviews.filter(function (reviews) {
@@ -99,5 +93,3 @@ export async function getAllCount() {
 //   books.splice(foundIndex, 1);
 //   return item;
 // }
-
-

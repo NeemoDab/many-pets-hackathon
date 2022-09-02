@@ -3,7 +3,7 @@ import cors from "cors";
 import countRouter from "./routes/countRouter.js";
 import dogQuoteRouter from "./routes/dogRouter.js";
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = 3001;
 
 app.use(express.json());
 app.use(cors());
