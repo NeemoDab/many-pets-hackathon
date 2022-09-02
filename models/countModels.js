@@ -3,42 +3,38 @@
 
 import { pool } from '../db/index.js';
 
-export async function getReviews(searchQuery) {
+export async function getCount(searchQuery) {
 	console.log(`IT'S HERE! (from models) ${searchQuery} !`);
 	// SQL: select everything from the snippets table where there title contains value1 [expressed here]. || represents a space.
 	const result = await pool.query(
-		`SELECT * FROM reviews WHERE LOWER(title) LIKE LOWER('%' || $1 || '%');`,
+		`SELECT * FROM count WHERE LOWER(count) LIKE LOWER('%' || $1 || '%');`,
 		[searchQuery]
 	);
 	console.log(result.rows);
 	return result.rows;
 }
 // Creates a new snippet entry on the database after sumbmission on the Front-End
-export async function createNewReview(newReview) {
+export async function createNewCount(newCount) {
 	const result = await pool.query(
-		`INSERT INTO reviews (title, models, socket, review, stars) VALUES ($1, $2, $3, $4, $5) RETURNING *;`,
+		`INSERT INTO count (count) VALUES ($1) RETURNING *;`,
 		[
-			newReview.title,
-			newReview.models,
-			newReview.socket,
-			newReview.review,
-			newReview.stars,
+			newCount.count,
     ]
 	);
 
 	return result.rows;
 }
 // Functionality to delete snippet // Only viable via Postman using DELETE at this time
-export async function deleteReview(id) {
+export async function deleteCount(id) {
 	const result = await pool.query(
-		'DELETE FROM reviews WHERE id = ($1) RETURNING *;',
+		'DELETE FROM count WHERE id = ($1) RETURNING *;',
 		[id]
 	);
 	return result;
 }
 // Retrieves all information within the database table.
-export async function getAllReviews() {
-	const result = await pool.query('SELECT * FROM reviews');
+export async function getAllCount() {
+	const result = await pool.query('SELECT * FROM count');
 	return result.rows;
 }
 

@@ -1,16 +1,16 @@
 import { query } from '../index.js';
 
-import reviews from "../data.js"
+import count from "../data.js"
 //Populate table function executed via script
 async function populateTable() {
-	for (let i = 0; i < reviews.length; i++) {
+	for (let i = 0; i < count.length; i++) {
 		const result = await query(
-			`INSERT INTO reviews(count) VALUES ($1) RETURNING *;`,
+			`INSERT INTO count(count) VALUES ($1) RETURNING *;`,
 			[
-				reviews[i].count,
+				count[i].count,
 			]
 		);
-		console.log(result.rows[0].title, 'inserted');
+		console.log(result.rows[0].count, 'inserted');
 	}
 }
 

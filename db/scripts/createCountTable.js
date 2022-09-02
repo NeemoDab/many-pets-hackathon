@@ -9,13 +9,13 @@ use our query function to communicate with the database (hand in the SQL string)
 
 //active cors to help work matching front end
 
-import { query } from "../index.js";
+import { query } from "../index";
 
-const sqlString = `CREATE TABLE IF NOT EXISTS reviews (reviews_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY, count INT);`;
+const sqlString = `CREATE TABLE IF NOT EXISTS count (count_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY, count INT);`;
 
-async function createReviewsTable() {
+async function createCountTable() {
   const res = await query(sqlString);
-  console.log("Created reviews table - success");
+  console.log("Created count table - success", res);
 }
 
-createReviewsTable();
+createCountTable();
