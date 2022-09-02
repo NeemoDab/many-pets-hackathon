@@ -3,7 +3,7 @@ const router = express.Router();
 
 //prettier-ignore
 import {
-	checkValidBreed, checkValidAddress, checkBreedDiscount, checkAddressUpcount} from "../models/dogModels.js";
+	checkValidBreed, checkValidAddress, checkBreedDiscount, checkAddressUpcount, calculateAgeMultiplier} from "../models/dogModels.js";
 
 router.get("/", async function (req, res) {
 	// /localhost:3001/dogquote?q=price&breed=dog&age=8&address=london&multi=1
@@ -52,13 +52,33 @@ router.get("/", async function (req, res) {
 		const isAddressUpcounted = await checkAddressUpcount(req.query.address);
 		isAddressUpcounted ? (addressUpcount = 0.15) : (addressUpcount = 0);
 
+		// - Base pet price at birth = £120
+		//     - 1 year old pet = 105% of this price (£126)
+		//     - 2 year old pet = 110% (£132)
+		//     - 3 = 115%
+		//     - 4 = 120%
+		//     - 5 = 125%
+		//     - 6 = 135%
+		//     - 7 = 145%
+		//     - 8 = 155%
+		//     - 9 = 165%
+		//     - 10+ = 175%
+
+		//Pet age price multiplier
+		const ageMultiplier = calculateAgeMultiplier(req.query.age);
+		console.log("ageMultiplier", ageMultiplier);
+
 		//Quote calculation
-		const insuranceQuotePrice = basePrice + (basePrice * breedDiscount) + (basePrice * addressUpcount);
+		const insuranceQuotePrice =
+			basePrice +
+			basePrice * breedDiscount +
+			basePrice * addressUpcount +
+			basePrice * ageMultiplier;
 
 		const payload = {
 			success: true,
-			message: `Quote for dog breed: ${req.query.breed} in ${req.query.address}`,
-			data: {insuranceQuotePrice},
+			message: `Quote for dog breed: ${req.query.breed} in ${req.query.address} of age ${req.query.age}`,
+			data: { insuranceQuotePrice },
 		};
 		return res.json(payload);
 	}

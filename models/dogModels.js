@@ -15,24 +15,54 @@ export async function checkValidAddress(searchQuery) {
 export async function checkBreedDiscount(dog) {
 	const dogBreedsWithDiscount = ["poodle", "labrador", "labradoodle"];
 
-	if (
-		dogBreedsWithDiscount.includes(dog.toLowerCase())
-	) {
+	if (dogBreedsWithDiscount.includes(dog.toLowerCase())) {
 		return true;
 	}
 	return false;
 }
 
-export async function checkAddressUpcount(address){
+export async function checkAddressUpcount(address) {
 	//Temporary address logic (awaiting address validation logic)
 	const addressWithUpcount = ["birmingham", "london", "leeds"];
-	if (
-		addressWithUpcount.includes(address.toLowerCase())
-	) {
-		return true;
-	}
-	return false;
 
+	for (let i = 0; i < addressWithUpcount.length; i++) {
+		if (address.toLowerCase().includes(addressWithUpcount[i])) {
+			return true;
+		}
+	}
+
+	// if (addressWithUpcount.includes(address.toLowerCase())) {
+	// 	return true;
+	// }
+	return false;
+}
+// - Base pet price at birth = £120
+//         - 1 year old pet = 105% of this price (£126)
+//         - 2 year old pet = 110% (£132)
+//         - 3 = 115%
+//         - 4 = 120%
+//         - 5 = 125%
+//         - 6 = 135%
+//         - 7 = 145%
+//         - 8 = 155%
+//         - 9 = 165%
+//         - 10+ = 175%
+export function calculateAgeMultiplier(age) {
+	//Ensure the age of the pet is an integer
+	const petAge = Math.floor(age);
+
+	let multiplier = 0;
+	if (0 <= petAge <= 5) {
+		multiplier = petAge * 0.05;
+	}
+	if (5 < petAge <= 10) {
+		multiplier = 0.25 + (petAge - 5) * 0.1;
+	}
+	if (petAge > 10) {
+		multiplier = 0.75;
+	}
+
+	return multiplier;
 }
 
 // export async function getReviews(searchQuery) {
