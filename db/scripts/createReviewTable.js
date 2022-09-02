@@ -11,7 +11,7 @@ use our query function to communicate with the database (hand in the SQL string)
 
 import { query } from "../index.js";
 
-const sqlString = `CREATE TABLE IF NOT EXISTS reviews (reviews_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY, title TEXT, models TEXT, socket TEXT, review TEXT, stars INT);`;
+const sqlString = `CREATE TABLE IF NOT EXISTS reviews (reviews_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY, count INT);`;
 
 async function createReviewsTable() {
   const res = await query(sqlString);
