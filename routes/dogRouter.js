@@ -12,6 +12,9 @@ router.get("/", async function (req, res) {
 	console.log(req.query.age);
 	console.log(req.query.address);
 	console.log(req.query.multi);
+
+	//TODO: Validate the query parameters and return error message/s if not in expected format/type (e.g. if age is not a Number)
+
 	if (
 		req.query.q !== undefined &&
 		req.query.breed !== undefined &&
@@ -52,21 +55,13 @@ router.get("/", async function (req, res) {
 		const isAddressUpcounted = await checkAddressUpcount(req.query.address);
 		isAddressUpcounted ? (addressUpcount = 0.15) : (addressUpcount = 0);
 
-		// - Base pet price at birth = £120
-		//     - 1 year old pet = 105% of this price (£126)
-		//     - 2 year old pet = 110% (£132)
-		//     - 3 = 115%
-		//     - 4 = 120%
-		//     - 5 = 125%
-		//     - 6 = 135%
-		//     - 7 = 145%
-		//     - 8 = 155%
-		//     - 9 = 165%
-		//     - 10+ = 175%
-
 		//Pet age price multiplier
 		const ageMultiplier = calculateAgeMultiplier(req.query.age);
 		console.log("ageMultiplier", ageMultiplier);
+
+		//Multi-pet 10% discount
+		// let multiPetDiscount = 1.0;
+		//TODO: incomplete!
 
 		//Quote calculation
 		const insuranceQuotePrice =

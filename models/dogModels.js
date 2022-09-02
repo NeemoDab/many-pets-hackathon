@@ -50,15 +50,17 @@ export async function checkAddressUpcount(address) {
 export function calculateAgeMultiplier(age) {
 	//Ensure the age of the pet is an integer
 	const petAge = Math.floor(age);
+	console.log("petAge", petAge);
 
 	let multiplier = 0;
-	if (0 <= petAge <= 5) {
+	if (petAge >= 0 && petAge <= 5) {
+		console.log("pet age between 0 and 5");
 		multiplier = petAge * 0.05;
-	}
-	if (5 < petAge <= 10) {
+	} else if (petAge > 5 && petAge <= 10) {
+		console.log("pet age between 6 and 10");
 		multiplier = 0.25 + (petAge - 5) * 0.1;
-	}
-	if (petAge > 10) {
+	} else {
+		console.log("pet age greater than 10");
 		multiplier = 0.75;
 	}
 
