@@ -5,60 +5,81 @@ const router = express.Router();
 import {
 	checkValidBreed, checkValidAddress, checkBreedDiscount, } from "../models/dogModels.js";
 
+//api.ideal-postcodes.co.uk/v1/autocomplete/addresses?=iddqd&q=parkside
 router.get("/", async function (req, res) {
-	// /dogquote?q=price&breed=dog&age=8&address=38%20Croft%20Rd%SW19%202NF&multi=1
-	console.log(req.query.q);
-	console.log(req.query.breed);
-	console.log(req.query.age);
-	console.log(req.query.address);
-	console.log(req.query.multi);
-	if (
-		req.query.q !== undefined &&
-		req.query.breed !== undefined &&
-		req.query.age !== undefined &&
-		req.query.address !== undefined &&
-		req.query.multi !== undefined
-	) {
-		//Checking the dog breed is valid
-		const isBreedValid = await checkValidBreed(req.query.breed);
-		console.log(isBreedValid);
+  // /dogquote?q=price&breed=dog&age=8&address=38%20Croft%20Rd%SW19%202NF&multi=1
+//   const request = require("request");
+//   let name = "golden retriever";
+//   request.get(
+//     {
+//       url: "https://api.api-ninjas.com/v1/dogs?name=" + name,
+//       headers: {
+//         "X-Api-Key": process.env.DOGAPIKEY,
+//       },
+//     },
+//     function (error, response, body) {
+//       if (error) return console.error("Request failed:", error);
+//       else if (response.statusCode != 200)
+//         return console.error(
+//           "Error:",
+//           response.statusCode,
+//           body.toString("utf8")
+//         );
+//       else console.log(body);
+//     }
+//   );
+  console.log(req.query.q);
+  console.log(req.query.breed);
+  console.log(req.query.age);
+  console.log(req.query.address);
+  console.log(req.query.multi);
+  if (
+    req.query.q !== undefined &&
+    req.query.breed !== undefined &&
+    req.query.age !== undefined &&
+    req.query.address !== undefined &&
+    req.query.multi !== undefined
+  ) {
+    //Checking the dog breed is valid
+    const isBreedValid = await checkValidBreed(req.query.breed);
+    console.log(isBreedValid);
 
-		if (!isBreedValid) {
-			return res.json({
-				success: false,
-				message: `This is not a valid dog breed`,
-			});
-		}
+    if (!isBreedValid) {
+      return res.json({
+        success: false,
+        message: `This is not a valid dog breed`,
+      });
+    }
 
-		//Checking the UK address is valid
-		const isAddressValid = await checkValidAddress(req.query.address);
-		console.log(isAddressValid);
+    //Checking the UK address is valid
+    const isAddressValid = await checkValidAddress(req.query.address);
+    console.log(isAddressValid);
 
-		if (!isAddressValid) {
-			return res.json({
-				success: false,
-				message: `This is not a valid UK address`,
-			});
-		}
+    if (!isAddressValid) {
+      return res.json({
+        success: false,
+        message: `This is not a valid UK address`,
+      });
+    }
 
-		let breedDiscount = 0;
-		const isBreedDiscounted = await checkBreedDiscount(req.query.breed);
-		isBreedDiscounted ? (breedDiscount = -0.1) : (breedDiscount = 0);
+    let breedDiscount = 0;
+    const isBreedDiscounted = await checkBreedDiscount(req.query.breed);
+    isBreedDiscounted ? (breedDiscount = -0.1) : (breedDiscount = 0);
 
-		const insuranceQuotePrice = basePrice + basePrice * breedDiscount;
+    const insuranceQuotePrice = basePrice + basePrice * breedDiscount;
 
-		const payload = {
-			success: true,
-			message: `Quote for dog breed: ${req.query.breed}`,
-			data: "your price here!",
-		};
-		return res.json(payload);
-	}
+    const payload = {
+      success: true,
+      message: `Quote for dog breed: ${req.query.breed}`,
+      data: "your price here!",
+    };
+    return res.json(payload);
+  }
 
-	return res.json({
-		success: false,
-		message: "One or more required parameters are missing",
-	});
+  return res.json({
+    success: false,
+    message: "One or more required parameters are missing",
+  });
 });
 
 // router.get("/", async function (req, res) {
