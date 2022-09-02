@@ -1,16 +1,27 @@
-
 // import { query } from "../db/index.js";
 
-import { pool } from '../db/index.js';
+import { pool } from "../db/index.js";
 
-export async function checkValidBreed(searchQuery){
+export async function checkValidBreed(searchQuery) {
 	//Need to add in logic for validation for dog breed
-	return true
+	return true;
 }
 
-export async function checkValidAddress(searchQuery){
+export async function checkValidAddress(searchQuery) {
 	//Need to add in logic for validation for UK address
-	return true
+	return true;
+}
+
+export async function checkBreedDiscount(dog) {
+	dogBreedsWithDiscount = ["poodle", "labrador", "labradoodle"];
+
+	if (
+		dogBreedsWithDiscount.includes(dog.toLowerCase())
+		// === "poodle" || dog.toLowerCase() === "labrador" || dog.toLowerCase() === "labradoodle"
+	) {
+		return true;
+	}
+	return false;
 }
 
 // export async function getReviews(searchQuery) {
@@ -58,8 +69,6 @@ export async function checkValidAddress(searchQuery){
 //   console.log(res);
 //   return res.rows
 // }
-
-
 
 // export function searchReviewsByTitle(searchTerm) {
 //   return reviews.filter(function (reviews) {
@@ -112,5 +121,3 @@ export async function checkValidAddress(searchQuery){
 //   books.splice(foundIndex, 1);
 //   return item;
 // }
-
-

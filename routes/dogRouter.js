@@ -1,8 +1,9 @@
-//DONE FOR NOW MAY NEED TO COME BACK
 import express from "express";
 const router = express.Router();
 
-import {checkValidBreed, checkValidAddress} from "../models/dogModels.js"
+//prettier-ignore
+import {
+	checkValidBreed, checkValidAddress, checkBreedDiscount, } from "../models/dogModels.js";
 
 router.get("/", async function (req, res) {
 	// /dogquote?q=price&breed=dog&age=8&address=38%20Croft%20Rd%SW19%202NF&multi=1
@@ -19,27 +20,33 @@ router.get("/", async function (req, res) {
 		req.query.multi !== undefined
 	) {
 		//Checking the dog breed is valid
-		const isBreedValid = await checkValidBreed(req.query.breed)
-		console.log(isBreedValid)
+		const isBreedValid = await checkValidBreed(req.query.breed);
+		console.log(isBreedValid);
 
-		if (!isBreedValid){	
+		if (!isBreedValid) {
 			return res.json({
 				success: false,
-				message: `This is not a valid dog breed`
-			})
+				message: `This is not a valid dog breed`,
+			});
 		}
 
 		//Checking the UK address is valid
-		const isAddressValid = await checkValidAddress(req.query.address)
-		console.log(isAddressValid)
+		const isAddressValid = await checkValidAddress(req.query.address);
+		console.log(isAddressValid);
 
-		if (!isAddressValid){	
+		if (!isAddressValid) {
 			return res.json({
 				success: false,
-				message: `This is not a valid UK address`
-			})
+				message: `This is not a valid UK address`,
+			});
 		}
-	
+
+		let breedDiscount = 0;
+		const isBreedDiscounted = await checkBreedDiscount(req.query.breed);
+		isBreedDiscounted ? (breedDiscount = -0.1) : (breedDiscount = 0);
+
+		const insuranceQuotePrice = basePrice + basePrice * breedDiscount;
+
 		const payload = {
 			success: true,
 			message: `Quote for dog breed: ${req.query.breed}`,
