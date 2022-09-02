@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
+  "type":"module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "db:createReviewTable": "node -r dotenv/config ./db/scripts/createReviewTable.js",
-    "db:populateReviewTable": "node -r dotenv/config ./db/scripts/populateReviewTable.js",
+    "db:createCountTable": "node -r dotenv/config ./db/scripts/createCountTable.js",
+    "db:populateCountTable": "node -r dotenv/config ./db/scripts/populateCountTable.js",
     "db:dropTable": "node -r dotenv/config ./db/scripts/dropTable.js"
   },
   "repository": {
@@ -23,6 +24,7 @@
   },
   "homepage": "https://github.com/NeemoDab/many-pets-hackathon#readme",
   "dependencies": {
+    "dotenv": "^16.0.2",
     "express": "^4.18.1",
     "nodemon": "^2.0.19",
     "pg": "^8.8.0"

@@ -3,26 +3,26 @@ import express from "express";
 const router = express.Router();
 
 import {
-  getReviews,
-  createNewReview,
-  deleteReview,
-  getAllReviews,
-} from "../models/reviewmodels.js";
+  getCount,
+  createNewCount,
+  deleteCount,
+  getAllCount
+} from "../models/countModels.js";
 
 router.get("/", async function (req, res) {
-  const responseObject = { success: true, data: await getAllReviews() };
+  const responseObject = { success: true, data: await getAllCount() };
   console.log("received")
   res.json(responseObject);
 });
 
 router.get("/", async function (req, res) {
   console.log(`Test received`)
-  const searchQuery = req.query.title;
+  const searchQuery = req.query.count;
   console.log(`searched query log: ${searchQuery}`);
   // define the object it'll return
   const responseObject = {
     success: true,
-    data: await getReviews(searchQuery),
+    data: await getCount(searchQuery),
   };
   // confirm in the console what the client requested
   console.log(`router get request worked`);
@@ -31,15 +31,15 @@ router.get("/", async function (req, res) {
 });
 
 router.post("/", async function (req, res) {
-  const newReview = req.body;
-  console.log(`${newReview.title} new review`)
-  const result = createNewReview(newReview);
+  const newCount = req.body;
+  console.log(`${newCount.count} new count`)
+  const result = createNewCount(newCount);
   res.json({ success: true, data: await result });
 });
 
 router.delete("/:id", async function (req, res) {
   const id = Number(req.params.id);
-  const result = deleteReview(id);
+  const result = deleteCount(id);
   res.json({ success: true, data: await result });
 });
 
