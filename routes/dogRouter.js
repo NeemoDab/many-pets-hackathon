@@ -3,12 +3,14 @@ const router = express.Router();
 
 //prettier-ignore
 import {
-	checkValidBreed, checkValidAddress, checkBreedDiscount, } from "../models/dogModels.js";
+	checkValidBreed, checkValidAddress, checkBreedDiscount, checkAddressUpcount, calculateAgeMultiplier} from "../models/dogModels.js";
 
 
 router.get("/", async function (req, res) {
-  // /dogquote?q=price&breed=dog&age=8&address=38%20Croft%20Rd%SW19%202NF&multi=1
-//   const request = require("request");
+
+	// /localhost:3001/dogquote?q=price&breed=dog&age=8&address=london&multi=1
+  
+  //   const request = require("request");
 //   let name = "golden retriever";
 //   request.get(
 //     {
@@ -47,58 +49,83 @@ router.get("/", async function (req, res) {
 //       else console.log(body);
 //     }
 //   );
-  console.log(req.query.q);
-  console.log(req.query.breed);
-  console.log(req.query.age);
-  console.log(req.query.address);
-  console.log(req.query.multi);
-  if (
-    req.query.q !== undefined &&
-    req.query.breed !== undefined &&
-    req.query.age !== undefined &&
-    req.query.address !== undefined &&
-    req.query.multi !== undefined
-  ) {
-    //Checking the dog breed is valid
-    const isBreedValid = await checkValidBreed(req.query.breed);
-    console.log(isBreedValid);
+  
+	console.log(req.query.q);
+	console.log(req.query.breed);
+	console.log(req.query.age);
+	console.log(req.query.address);
+	console.log(req.query.multi);
 
-    if (!isBreedValid) {
-      return res.json({
-        success: false,
-        message: `This is not a valid dog breed`,
-      });
-    }
+	//TODO: Validate the query parameters and return error message/s if not in expected format/type (e.g. if age is not a Number)
 
-    //Checking the UK address is valid
-    const isAddressValid = await checkValidAddress(req.query.address);
-    console.log(isAddressValid);
+	if (
+		req.query.q !== undefined &&
+		req.query.breed !== undefined &&
+		req.query.age !== undefined &&
+		req.query.address !== undefined &&
+		req.query.multi !== undefined
+	) {
+		//Checking the dog breed is valid
+		const isBreedValid = await checkValidBreed(req.query.breed);
+		console.log(isBreedValid);
 
-    if (!isAddressValid) {
-      return res.json({
-        success: false,
-        message: `This is not a valid UK address`,
-      });
-    }
+		if (!isBreedValid) {
+			return res.json({
+				success: false,
+				message: `This is not a valid dog breed`,
+			});
+		}
 
-    let breedDiscount = 0;
-    const isBreedDiscounted = await checkBreedDiscount(req.query.breed);
-    isBreedDiscounted ? (breedDiscount = -0.1) : (breedDiscount = 0);
+		//Checking the UK address is valid
+		const isAddressValid = await checkValidAddress(req.query.address);
+		console.log(isAddressValid);
 
-    const insuranceQuotePrice = basePrice + basePrice * breedDiscount;
+		if (!isAddressValid) {
+			return res.json({
+				success: false,
+				message: `This is not a valid UK address`,
+			});
+		}
 
-    const payload = {
-      success: true,
-      message: `Quote for dog breed: ${req.query.breed}`,
-      data: "your price here!",
-    };
-    return res.json(payload);
-  }
+		//Dog breed discount
+		let basePrice = 120;
+		let breedDiscount = 0;
+		const isBreedDiscounted = await checkBreedDiscount(req.query.breed);
+		isBreedDiscounted ? (breedDiscount = -0.1) : (breedDiscount = 0);
 
-  return res.json({
-    success: false,
-    message: "One or more required parameters are missing",
-  });
+		//Address upcount
+		let addressUpcount = 0;
+		const isAddressUpcounted = await checkAddressUpcount(req.query.address);
+		isAddressUpcounted ? (addressUpcount = 0.15) : (addressUpcount = 0);
+
+		//Pet age price multiplier
+		const ageMultiplier = calculateAgeMultiplier(req.query.age);
+		console.log("ageMultiplier", ageMultiplier);
+
+		//Multi-pet 10% discount
+		// let multiPetDiscount = 1.0;
+		//TODO: incomplete!
+
+		//Quote calculation
+		const insuranceQuotePrice =
+			basePrice +
+			basePrice * breedDiscount +
+			basePrice * addressUpcount +
+			basePrice * ageMultiplier;
+
+		const payload = {
+			success: true,
+			message: `Quote for dog breed: ${req.query.breed} in ${req.query.address} of age ${req.query.age}`,
+			data: { insuranceQuotePrice },
+		};
+		return res.json(payload);
+	}
+
+	return res.json({
+		success: false,
+		message: "One or more required parameters are missing",
+	});
+
 });
 
 // router.get("/", async function (req, res) {
