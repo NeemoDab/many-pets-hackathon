@@ -3,7 +3,7 @@ import express from "express";
 const router = express.Router();
 
 router.get("/", async function (req, res) {
-	// /pets?q=price&breed=dog&age=8&location=38%20Croft%20Rd%SW19%202NF&multi=1
+	// /dogquote?q=price&breed=dog&age=8&location=38%20Croft%20Rd%SW19%202NF&multi=1
 	console.log(req.query.q);
 	console.log(req.query.breed);
 	console.log(req.query.age);
@@ -26,6 +26,11 @@ router.get("/", async function (req, res) {
 		};
 		return res.json(payload);
 	}
+
+	return res.json({
+		success: false,
+		message: "One or more required parameters are missing",
+	});
 });
 
 // router.get("/", async function (req, res) {
@@ -115,4 +120,4 @@ router.get("/", async function (req, res) {
 //   res.json({ success: true, payload: result });
 // });
 
-// export default router;
+export default router;
