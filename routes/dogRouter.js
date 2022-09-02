@@ -8,45 +8,45 @@ import {
 
 router.get("/", async function (req, res) {
   // /dogquote?q=price&breed=dog&age=8&address=38%20Croft%20Rd%SW19%202NF&multi=1
-  const request = require("request");
-  let name = "golden retriever";
-  request.get(
-    {
-      url: "https://api.api-ninjas.com/v1/dogs?name=" + name,
-      headers: {
-        "X-Api-Key": process.env.DOGAPIKEY,
-      },
-    },
-    function (error, response, body) {
-      if (error) return console.error("Request failed:", error);
-      else if (response.statusCode != 200)
-        return console.error(
-          "Error:",
-          response.statusCode,
-          body.toString("utf8")
-        );
-      else console.log(body);
-    }
-  );
-  let address = "";
-  request.get(
-    {
-      url: 'api.ideal-postcodes.co.uk/v1/autocomplete/addresses?=iddqd&q=parkside',
-      headers: {
-        "X-Api-Key": process.env.ADDRESSAPIKEY,
-      },
-    },
-    function (error, response, body) {
-      if (error) return console.error("Request failed:", error);
-      else if (response.statusCode != 200)
-        return console.error(
-          "Error:",
-          response.statusCode,
-          body.toString("utf8")
-        );
-      else console.log(body);
-    }
-  );
+//   const request = require("request");
+//   let name = "golden retriever";
+//   request.get(
+//     {
+//       url: "https://api.api-ninjas.com/v1/dogs?name=" + name,
+//       headers: {
+//         "X-Api-Key": process.env.DOGAPIKEY,
+//       },
+//     },
+//     function (error, response, body) {
+//       if (error) return console.error("Request failed:", error);
+//       else if (response.statusCode != 200)
+//         return console.error(
+//           "Error:",
+//           response.statusCode,
+//           body.toString("utf8")
+//         );
+//       else console.log(body);
+//     }
+//   );
+//   let address = "";
+//   request.get(
+//     {
+//       url: 'api.ideal-postcodes.co.uk/v1/autocomplete/addresses?=iddqd&q=parkside',
+//       headers: {
+//         "X-Api-Key": process.env.ADDRESSAPIKEY,
+//       },
+//     },
+//     function (error, response, body) {
+//       if (error) return console.error("Request failed:", error);
+//       else if (response.statusCode != 200)
+//         return console.error(
+//           "Error:",
+//           response.statusCode,
+//           body.toString("utf8")
+//         );
+//       else console.log(body);
+//     }
+//   );
   console.log(req.query.q);
   console.log(req.query.breed);
   console.log(req.query.age);
